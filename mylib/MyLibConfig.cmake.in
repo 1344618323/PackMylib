@@ -1,0 +1,22 @@
+@PACKAGE_INIT@
+
+# 具体用法参考：https://cmake.org/cmake/help/latest/module/CMakePackageConfigHelpers.html
+# 要记得写@PACKAGE_INIT@才行！
+# configure_package_config_file提供了两个重要的宏：set_and_check、check_required_components
+# 如传入变量@PACKAGE_NAME@为MyLib，@INCLUDE_INSTALL_DIR@为 Mylib/include,@LIBRARY_INSTALL_DIR@为lib
+# 则这里会给MyLib_INCLUDE_DIRS 赋值为${PACKAGE_PREFIX_DIR}/Mylib/include
+#          Mylib_LIBRARY_DIRS 赋值为${PACKAGE_PREFIX_DIR}/lib
+# ${PACKAGE_PREFIX_DIR}即${CPACK_PACKAGING_INSTALL_PREFIX}
+# set_and_check不仅仅用于赋值，还会查看给@PACKAGE_NAME@_INCLUDE_DIRS、@PACKAGE_NAME@_LIBRARY_DIRS赋的值所表示的路径是不是存在
+
+set_and_check(@PACKAGE_NAME@_INCLUDE_DIRS "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set_and_check(@PACKAGE_NAME@_LIBRARY_DIRS "@PACKAGE_LIBRARY_INSTALL_DIR@")
+
+# 给${Mylib_LIBRARIES}赋值
+
+set(@PACKAGE_NAME@_LIBRARIES
+    libfuna
+    libfunb
+)
+
+check_required_components(@PACKAGE_NAME@)
